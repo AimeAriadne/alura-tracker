@@ -23,7 +23,7 @@ export default defineComponent({
 
 <template>
   <TaskBox>
-    <div class="columns">
+    <div class="columns is-align-items-center">
       <div class="column is-four-fifths">
         {{ taskDone.description || 'Empty Task' }}
       </div>
@@ -34,6 +34,12 @@ export default defineComponent({
           time-color="#4A4A4A"  
         />
       </div>
+
+      <button 
+        class="button is-ghost fas fa-trash"
+        @click="$emit('removeTask')" 
+      >
+      </button>
     </div>
   </TaskBox>
 </template>

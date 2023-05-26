@@ -3,8 +3,8 @@ import { defineComponent } from 'vue'
 import SideBar from '@/components/SideBar.vue'
 import AppForm from '@/components/AppForm.vue';
 import TaskModel from '@/components/TaskModel.vue'
-import type ITask from '@/interfaces/ITask'
 import TaskBox from '@/components/TaskBox.vue';
+import type ITask from '@/interfaces/ITask'
 
 export default defineComponent({
   name: 'HomeView',
@@ -17,7 +17,7 @@ export default defineComponent({
   data() {
     return {
       tasks: [] as ITask[],
-      darkModeOn: false 
+      darkModeOn: false,
     }
   },
   computed: {
@@ -26,8 +26,24 @@ export default defineComponent({
     }
   },
   methods: {
-    saveTask(task: ITask): void {
+    getList(): ITask[] {
+      const taskList = localStorage.getItem('task-list')
+      if (taskList) {
+        this.tasks = JSON.parse(taskList)
+      }
+      return this.tasks
+    },
+    addTask(task: ITask): void {
       this.tasks.push(task)
+      this.saveTasks()
+    },
+    saveTasks() {
+      localStorage.setItem('task-list', JSON.stringify(this.tasks))
+    },
+    removeTask(task: ITask) {
+      const foundItem = this.tasks.findIndex(taskItem => taskItem === task) 
+      this.tasks.splice(foundItem, 1)
+      this.saveTasks()
     },
     toggleDarkMode(darkMode: boolean): void {
       this.darkModeOn = darkMode
@@ -46,7 +62,7 @@ export default defineComponent({
     </div>
 
     <div class="column app-content">
-      <AppForm @save-task="saveTask"/>
+      <AppForm @save-task="addTask"/>
 
       <div class="task-list">
         <TaskBox v-if="emptyList">
@@ -57,6 +73,7 @@ export default defineComponent({
           v-for="(task, index) in tasks" 
           :key="index"
           :task-done="task"
+          @remove-task="removeTask(task)"
         />
       </div>
     </div> 
