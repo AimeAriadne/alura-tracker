@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AppForm from '@/components/AppForm.vue';
+import AppForm from '@/components/AppForm.vue'
 import TaskModel from '@/components/TaskModel.vue'
-import TaskBox from '@/components/TaskBox.vue';
+import TaskBox from '@/components/TaskBox.vue'
 import type ITask from '@/interfaces/ITask'
 
 export default defineComponent({
@@ -56,7 +56,7 @@ export default defineComponent({
       </TaskBox>
       
       <TaskModel 
-        v-for="(task, index) in tasks" 
+        v-for="(task, index) in getList()" 
         :key="index"
         :task-done="task"
         @remove-task="removeTask(task)"
