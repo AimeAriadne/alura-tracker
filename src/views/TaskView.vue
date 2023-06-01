@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AppForm from '@/components/AppForm.vue'
+import TaskForm from '@/components/TaskForm.vue'
 import TaskModel from '@/components/TaskModel.vue'
 import TaskBox from '@/components/TaskBox.vue'
 import type ITask from '@/interfaces/ITask'
@@ -8,7 +8,7 @@ import type ITask from '@/interfaces/ITask'
 export default defineComponent({
   name: 'TaskView',
   components: {
-    AppForm,
+    TaskForm,
     TaskModel,
     TaskBox
 },
@@ -17,19 +17,20 @@ export default defineComponent({
       tasks: [] as ITask[],
     }
   },
+  watch: {
+    tasks() {
+      const taskList = localStorage.getItem('task-list')
+      if (taskList) {
+        this.tasks = JSON.parse(taskList)
+      }
+    }
+  },
   computed: {
     emptyList(): boolean {
       return this.tasks.length === 0
     }
   },
   methods: {
-    getList(): ITask[] {
-      const taskList = localStorage.getItem('task-list')
-      if (taskList) {
-        this.tasks = JSON.parse(taskList)
-      }
-      return this.tasks
-    },
     addTask(task: ITask): void {
       this.tasks.push(task)
       this.saveTasks()
@@ -48,7 +49,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <AppForm @save-task="addTask"/>
+    <TaskForm @save-task="addTask"/>
 
     <div class="task-list">
       <TaskBox v-if="emptyList">
@@ -56,7 +57,7 @@ export default defineComponent({
       </TaskBox>
       
       <TaskModel 
-        v-for="(task, index) in getList()" 
+        v-for="(task, index) in tasks" 
         :key="index"
         :task-done="task"
         @remove-task="removeTask(task)"
