@@ -18,6 +18,10 @@ export const useProjectStore = defineStore('projectStore', {
       } as IProject
       
       this.projects.push(project)
+    },
+    editProject(project: IProject) {
+      const projectIndex = this.projects.findIndex(item => item.id === project.id)
+      this.projects[projectIndex] = project
     }
   }
 })

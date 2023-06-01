@@ -4,17 +4,6 @@ import { useProjectStore } from '@/stores/projectStore'
 
 export default defineComponent({
   name: 'ProjectsView',
-  data() {
-    return {
-      projectName: '',
-    }
-  }, 
-  methods: {
-    saveProject(): void {
-      this.projectStore.addProject(this.projectName)
-      this.projectName = ''
-    }
-  },
   setup() {
     const projectStore = useProjectStore()
     return {
@@ -27,36 +16,21 @@ export default defineComponent({
 <template>
   <section class="projects">
     <h1 class="title">Projects</h1>
-    <form @submit.prevent="saveProject">
-      <div class="field">
-        <label 
-          for="project" 
-          class="label"
-        >
-          Project Name
-        </label>
-        <input 
-          type="text" 
-          name="project" 
-          id="project" 
-          class="input"
-          v-model="projectName"
-        >
-        <div class="field">
-          <button 
-            class="button"
-            type="submit"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    </form>
+    <RouterLink 
+      to="/projects/new" 
+      class="button"
+    >
+      <span class="icon is-small">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span>New project</span>
+    </RouterLink>
     <table class="table is-fullwidth">
       <thead>
         <tr>
           <th>id</th>
           <th>Name</th>
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -66,6 +40,16 @@ export default defineComponent({
         >
           <td>{{ project.id }}</td>
           <td>{{ project.name }}</td>
+          <td>
+            <RouterLink 
+              :to="`/projects/${project.id}`" 
+              class="button"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </RouterLink>
+          </td>
         </tr>
       </tbody>
     </table>

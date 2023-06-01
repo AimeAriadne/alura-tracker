@@ -4,7 +4,7 @@ import StopwatchTimer from './StopwatchTimer.vue'
 import { useProjectStore } from '@/stores/projectStore'
 
 export default defineComponent({
-  name: 'AppForm',
+  name: 'TaskForm',
   components: {
     StopwatchTimer,
   },
