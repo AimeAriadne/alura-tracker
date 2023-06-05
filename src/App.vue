@@ -2,12 +2,14 @@
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 import SideBar from './components/SideBar.vue'
+import NotifyModel from './components/NotifyModel.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     RouterView,
     SideBar,
+    NotifyModel,
   },
   data() {
     return {
@@ -32,7 +34,9 @@ export default defineComponent({
     </div>
 
     <div class="column app-content">
-      <RouterView />
+      <NotifyModel/>
+
+      <RouterView/>
     </div> 
   </main>
 </template>
