@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue'
 import StopwatchTimer from './StopwatchTimer.vue'
 import { useProjectStore } from '@/stores/projectStore'
+import { useNotificationStore } from '@/stores/notificationStore'
+import { notifyType } from '@/interfaces/INotify'
 
 export default defineComponent({
   name: 'TaskForm',
@@ -17,10 +19,20 @@ export default defineComponent({
   },
   methods: {
     finishTask(time: number): void {
+      const project = this.projectStore.projects.find(project => project.id === this.projectId)
+      if (!project) {
+        this.notificationStore.notify({
+          title: 'Project Alert',
+          text: `Oops! You need to choose a project`,
+          type: notifyType.DANGER,
+          id: new Date().getTime()
+        })
+        return
+      }
       this.$emit('saveTask', {
           timeInSecs: time,
           description: this.taskDone,
-          project: this.projectStore.projects.find(project => project.id === this.projectId)
+          project
       })
       this.taskDone = ''
       this.projectId = ''
@@ -28,9 +40,10 @@ export default defineComponent({
   },
   setup() {
     const projectStore = useProjectStore() 
-
+    const notificationStore = useNotificationStore()
     return {
-      projectStore
+      projectStore,
+      notificationStore
     }
   }
 })

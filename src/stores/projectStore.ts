@@ -8,7 +8,7 @@ export interface ProjectState {
 
 export const useProjectStore = defineStore('projectStore', {
   state: (): ProjectState => ({
-    projects: [] 
+    projects: []
   }),
   actions: {
     addProject(projectName: string): void {

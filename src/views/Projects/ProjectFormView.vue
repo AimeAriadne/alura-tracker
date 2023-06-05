@@ -1,6 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useProjectStore } from '@/stores/projectStore'
+import { useNotificationStore } from '@/stores/notificationStore'
+import { notifyType } from '@/interfaces/INotify'
 
 export default defineComponent({
   name: 'ProjectFormView',
@@ -30,14 +32,22 @@ export default defineComponent({
       } else {
         this.projectStore.addProject(this.projectName)
       }
+      this.notificationStore.notify({
+        title: 'Project Alert',
+        text: `Your project ${this.projectName} was successfully ${this.id ? 'edited' : 'added'}`,
+        type: notifyType.SUCCESS,
+        id: new Date().getTime()
+      })
       this.projectName = ''
       this.$router.push('/projects')
     }
   },
   setup() {
     const projectStore = useProjectStore()
+    const notificationStore = useNotificationStore()
     return {
-      projectStore
+      projectStore,
+      notificationStore
     }
   }
 })
