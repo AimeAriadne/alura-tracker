@@ -4,6 +4,11 @@ import { useProjectStore } from '@/stores/projectStore'
 
 export default defineComponent({
   name: 'ProjectsListView',
+  methods: {
+    removeProject(projectId: string): void {
+      this.projectStore.deleteProject(projectId)
+    }
+  },
   setup() {
     const projectStore = useProjectStore()
     return {
@@ -56,7 +61,14 @@ export default defineComponent({
               </span>
             </RouterLink>
 
-            
+            <button 
+              class="button ml-2 is-danger"
+              @click="removeProject(project.id)"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-trash"></i>
+              </span>
+            </button>
           </td>
         </tr>
       </tbody>
