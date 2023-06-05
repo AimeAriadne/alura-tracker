@@ -50,10 +50,12 @@ export default defineComponent({
         placeholder="New Task"
         v-model="taskDone"
       />
+
       <div class="column is-3">
         <div class="select">
           <select v-model="projectId">
             <option value="">Select a project</option>
+            
             <option
               v-for="project in projectStore.projects"
               :value="project.id"
@@ -64,6 +66,7 @@ export default defineComponent({
           </select>
         </div>
       </div>
+      
       <div class="column">
         <StopwatchTimer @finished-timer="finishTask"/>
       </div>

@@ -36,9 +36,12 @@ export default defineComponent({
       </div>
 
       <button 
-        class="button is-ghost fas fa-trash"
-        @click="$emit('removeTask')" 
+        class="button ml-2 is-danger"
+        @click="$emit('removeTask')"
       >
+        <span class="icon is-small">
+          <i class="fas fa-trash"></i>
+        </span>
       </button>
     </div>
   </TaskBox>

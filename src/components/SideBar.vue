@@ -33,14 +33,19 @@ export default defineComponent({
 <template>
   <header>
     <h1>
-      <img src="../assets/logo.png" alt="Alura Tracker">
+      <img 
+        src="../assets/logo.png" 
+        alt="Alura Tracker"
+      >
     </h1>
+
     <button 
       class="button is-link is-outlined"
       @click="toggleDarkMode"
     >
       <i :class="darkModeIcon"></i>
     </button>
+
     <nav class="mt-5">
       <ul>
         <li>
@@ -52,6 +57,7 @@ export default defineComponent({
             Tasks
           </RouterLink>
         </li>
+        
         <li>
           <RouterLink 
             class="link"

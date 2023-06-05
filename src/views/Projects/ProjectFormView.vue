@@ -44,8 +44,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="projects">
-    <h1 class="title">Projects</h1>
+  <section>
     <form @submit.prevent="saveProject">
       <div class="field">
         <label 
@@ -54,6 +53,7 @@ export default defineComponent({
         >
           Project Name
         </label>
+
         <input 
           type="text" 
           name="project" 
@@ -61,6 +61,7 @@ export default defineComponent({
           class="input"
           v-model="projectName"
         >
+        
         <div class="field">
           <button 
             class="button"
@@ -73,9 +74,3 @@ export default defineComponent({
     </form>
   </section>
 </template>
-
-<style scoped>
-.projects {
-  padding: 1.25rem;
-}
-</style>

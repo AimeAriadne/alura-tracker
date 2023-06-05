@@ -30,6 +30,7 @@ export default defineComponent({
     <span class="icon">
       <i :class="iconBtn"></i>
     </span>
+    
     <span>{{ label }}</span>
   </button>
 </template>
