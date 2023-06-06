@@ -24,7 +24,8 @@ export const useProjectStore = defineStore('projectStore', {
       this.projects[projectIndex] = project
     },
     deleteProject(projectId: string) {
-      this.projects = this.projects.filter(item => item.id !== projectId)
+      const foundItem = this.projects.findIndex(item => item.id === projectId) 
+      this.projects.splice(foundItem, 1)
     }
   }
 })

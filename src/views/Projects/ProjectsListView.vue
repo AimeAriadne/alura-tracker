@@ -1,9 +1,15 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
 import { useProjectStore } from '@/stores/projectStore'
 
 export default defineComponent({
   name: 'ProjectsListView',
+  mounted() {
+    const projectList = localStorage.getItem('project-list')
+    if (projectList) {
+      this.projectStore.projects = JSON.parse(projectList)
+    }
+  },
   methods: {
     removeProject(projectId: string): void {
       this.projectStore.deleteProject(projectId)
@@ -11,6 +17,15 @@ export default defineComponent({
   },
   setup() {
     const projectStore = useProjectStore()
+
+    watch(projectStore.$state, (state) => {
+      if (state.projects.length) {
+        localStorage.setItem('project-list', JSON.stringify(state.projects))
+      } else {
+        localStorage.removeItem('project-list')
+      }
+    })
+
     return {
       projectStore
     }

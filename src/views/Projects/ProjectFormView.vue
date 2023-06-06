@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
 import { useProjectStore } from '@/stores/projectStore'
 import { useNotificationStore } from '@/stores/notificationStore'
 import { notifyType } from '@/interfaces/INotify'
@@ -45,6 +45,13 @@ export default defineComponent({
   setup() {
     const projectStore = useProjectStore()
     const notificationStore = useNotificationStore()
+
+    watch(projectStore.$state, (state) => {
+      if (state.projects.length) {
+        localStorage.setItem('project-list', JSON.stringify(state.projects))
+      }
+    })
+
     return {
       projectStore,
       notificationStore
