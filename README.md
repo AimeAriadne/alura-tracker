@@ -5,6 +5,7 @@ Task tracker created as an exercise from Alura's Vue.js course.
 - Vue.js (Options API)
 - Vite
 - TypeScript
+- Pinia
 - Bluma
 - Font Awesome
 
