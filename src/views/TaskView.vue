@@ -35,9 +35,9 @@ export default defineComponent({
   setup() {
     const taskStore = useTaskStore()
 
-    watch(taskStore.tasks, (newValue) => {
-      if (newValue.length) {
-        localStorage.setItem('task-list', JSON.stringify(newValue))
+    watch(taskStore.$state, (state) => {
+      if (state.tasks.length) {
+        localStorage.setItem('task-list', JSON.stringify(state.tasks))
       } else {
         localStorage.removeItem('task-list')
       }
