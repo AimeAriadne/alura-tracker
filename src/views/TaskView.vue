@@ -1,9 +1,10 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
 import TaskForm from '@/components/TaskForm.vue'
 import TaskModel from '@/components/TaskModel.vue'
 import TaskBox from '@/components/TaskBox.vue'
 import type ITask from '@/interfaces/ITask'
+import { useTaskStore } from '@/stores/taskStore'
 
 export default defineComponent({
   name: 'TaskView',
@@ -11,38 +12,40 @@ export default defineComponent({
     TaskForm,
     TaskModel,
     TaskBox
-},
-  data() {
-    return {
-      tasks: [] as ITask[],
-    }
   },
-  watch: {
-    tasks() {
-      const taskList = localStorage.getItem('task-list')
-      if (taskList) {
-        this.tasks = JSON.parse(taskList)
-      }
+  mounted() {
+    const taskList = localStorage.getItem('task-list')
+    if (taskList) {
+      this.taskStore.tasks = JSON.parse(taskList)
     }
   },
   computed: {
     emptyList(): boolean {
-      return this.tasks.length === 0
+      return this.taskStore.tasks.length === 0
     }
   },
   methods: {
     addTask(task: ITask): void {
-      this.tasks.push(task)
-      this.saveTasks()
-    },
-    saveTasks() {
-      localStorage.setItem('task-list', JSON.stringify(this.tasks))
+      this.taskStore.addTask(task)
     },
     removeTask(task: ITask) {
-      const foundItem = this.tasks.findIndex(taskItem => taskItem === task) 
-      this.tasks.splice(foundItem, 1)
-      this.saveTasks()
+      this.taskStore.deleteTask(task)
     },
+  },
+  setup() {
+    const taskStore = useTaskStore()
+
+    watch(taskStore.tasks, (newValue) => {
+      if (newValue.length) {
+        localStorage.setItem('task-list', JSON.stringify(newValue))
+      } else {
+        localStorage.removeItem('task-list')
+      }
+    })
+
+    return {
+      taskStore
+    }
   }
 })
 </script>
@@ -57,7 +60,7 @@ export default defineComponent({
       </TaskBox>
       
       <TaskModel 
-        v-for="(task, index) in tasks" 
+        v-for="(task, index) in taskStore.tasks" 
         :key="index"
         :task-done="task"
         @remove-task="removeTask(task)"
