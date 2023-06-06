@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent } from 'vue'
 import { useProjectStore } from '@/stores/projectStore'
 
 export default defineComponent({
@@ -17,15 +17,7 @@ export default defineComponent({
   },
   setup() {
     const projectStore = useProjectStore()
-
-    watch(projectStore.$state, (state) => {
-      if (state.projects.length) {
-        localStorage.setItem('project-list', JSON.stringify(state.projects))
-      } else {
-        localStorage.removeItem('project-list')
-      }
-    })
-
+    
     return {
       projectStore
     }
