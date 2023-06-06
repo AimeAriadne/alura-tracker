@@ -2,7 +2,7 @@
 
 Task tracker created as an exercise from Alura's Vue.js course.
 
-- Vue.js (Options API)
+- Vue.js (Options and Composition API)
 - Vite
 - TypeScript
 - Pinia
