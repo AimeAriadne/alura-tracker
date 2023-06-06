@@ -24,8 +24,12 @@ export default defineComponent({
 <template>
   <TaskBox>
     <div class="columns is-align-items-center">
-      <div class="column is-four-fifths">
+      <div class="column is-half">
         {{ taskDone.description || 'Empty Task' }}
+      </div>
+
+      <div class="column">
+        {{ taskDone.project.name || 'Empty Project' }}
       </div>
 
       <div class="column">
